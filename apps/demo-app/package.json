@@ -1,0 +1,30 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@bitsong-auth/nuxt": "workspace:*",
+    "@nuxt/eslint": "1.0.1",
+    "@nuxt/fonts": "0.10.3",
+    "@nuxt/icon": "1.10.3",
+    "@nuxtjs/color-mode": "3.5.2",
+    "@nuxtjs/tailwindcss": "6.12.2",
+    "better-auth": "^1.1.9",
+    "eslint": "^8.57.0 || ^9.0.0",
+    "lucide-vue-next": "^0.469.0",
+    "nuxt": "^3.15.4",
+    "safe-rpc-iframe": "^0.1.8",
+    "shadcn-nuxt": "0.11.3",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vue": "latest",
+    "vue-router": "latest"
+  }
+}

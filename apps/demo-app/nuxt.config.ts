@@ -1,0 +1,49 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+
+  modules: [
+    '@nuxt/eslint',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/tailwindcss',
+    '@nuxt/fonts',
+    '@nuxt/icon',
+    'shadcn-nuxt',
+    '@bitsong-auth/nuxt',
+  ],
+
+  devtools: { enabled: true },
+
+  css: ['./app/assets/css/base.css'],
+
+  runtimeConfig: {
+    public: {
+      auth: {
+        redirectUserTo: '/',
+        redirectGuestTo: '/signin',
+      },
+    },
+  },
+
+  future: {
+    compatibilityVersion: 4,
+  },
+  compatibilityDate: '2025-02-04',
+
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+  },
+
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './app/components/ui',
+  },
+})
