@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addRouteMiddleware } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addRouteMiddleware, hasNuxtModule, installModule, addImports } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -10,24 +10,26 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options of the Nuxt module
   defaults: {},
-  setup(_options, _nuxt) {
+  async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
+    if (!hasNuxtModule('@quirks/nuxt', nuxt)) {
+      await installModule('@quirks/nuxt')
+    }
+
+    addPlugin(resolve('./runtime/plugins/quirks'))
     addPlugin({
       src: resolve('./runtime/plugins/auth.client'),
       mode: 'client',
+      order: 1,
     })
-    addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server' })
-
+    addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: 0 })
     addImportsDir(resolve('./runtime/composables'))
-
     addRouteMiddleware({
       name: 'auth',
       path: resolve('./runtime/middleware/auth.global'),
       global: true,
     })
-
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolve('./runtime/plugin'))
+    // addPlugin(resolve('./runtime/plugin'))
   },
 })

@@ -3,9 +3,11 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=./apps/*",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "pg:start": "docker compose up -d",
+    "pg:stop": "docker compose down"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

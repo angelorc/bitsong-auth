@@ -28,10 +28,12 @@ CREATE TABLE "auth_sessions" (
 --> statement-breakpoint
 CREATE TABLE "auth_users" (
 	"id" text PRIMARY KEY NOT NULL,
+	"is_web3" boolean,
 	"name" text NOT NULL,
 	"email" text NOT NULL,
 	"email_verified" boolean NOT NULL,
 	"image" text,
+	"selected_wallet" text,
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp NOT NULL,
 	CONSTRAINT "auth_users_email_unique" UNIQUE("email")
@@ -46,16 +48,30 @@ CREATE TABLE "auth_verifications" (
 	"updated_at" timestamp
 );
 --> statement-breakpoint
+CREATE TABLE "auth_wallets" (
+	"id" text PRIMARY KEY NOT NULL,
+	"user_id" text NOT NULL,
+	"chain_type" text NOT NULL,
+	"chain_name" text NOT NULL,
+	"coin_type" integer NOT NULL,
+	"address" text NOT NULL,
+	"pubkey" text NOT NULL,
+	"parent_pubkey" text,
+	"wallet_type" text NOT NULL,
+	"created_at" timestamp,
+	"updated_at" timestamp,
+	CONSTRAINT "auth_wallets_address_unique" UNIQUE("address")
+);
+--> statement-breakpoint
 CREATE TABLE "shares" (
 	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"share" text NOT NULL,
 	"backup_share" text,
-	"addresses" jsonb NOT NULL,
-	"pubkeys" jsonb NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "auth_accounts" ADD CONSTRAINT "auth_accounts_user_id_auth_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."auth_users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "auth_sessions" ADD CONSTRAINT "auth_sessions_user_id_auth_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."auth_users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "auth_wallets" ADD CONSTRAINT "auth_wallets_user_id_auth_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."auth_users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "shares" ADD CONSTRAINT "shares_user_id_auth_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."auth_users"("id") ON DELETE no action ON UPDATE no action;

@@ -54,14 +54,15 @@ async function createAndSignCreateWalletMsg(chainName: string = 'bitsong') {
 
     const chain = await getChainByName(chainName)
 
+    const url = useRequestURL()
     const message = toMessage({
       address: account.address,
       chainId: chain.chain_id,
       chainName: chain.chain_name,
-      domain: 'localhost:3000',
+      domain: url.host.toString(),
       version: '1',
       nonce: nanoid(),
-      uri: 'https://bitsong.io',
+      uri: `${url.protocol}//${url.host}`,
     })
 
     const { signature: { pub_key, signature } } = await signAminoADR36({ chainName, address: account.address, message })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // https://better-auth.vercel.app/docs/integrations/nuxt#ssr-usage
-const { user, session, wallet, client, signOut } = useAuth()
+const { user, session, wallets, client, signOut } = useAuth()
 const { data: accounts } = await useAsyncData('accounts', () => client.listAccounts())
 </script>
 
@@ -22,11 +22,11 @@ const { data: accounts } = await useAsyncData('accounts', () => client.listAccou
 
           <div class="bg-muted/50 p-4 rounded-xl flex-1">
             <h3 class="text-xl font-bold py-2">
-              Wallet
+              Wallets
             </h3>
             <textarea
               disabled
-              :value="JSON.stringify(wallet, null, 2)"
+              :value="JSON.stringify(wallets, null, 2)"
               class="bg-transparent h-full w-full resize-none font-mono text-xs"
             />
           </div>

@@ -7,7 +7,7 @@ definePageMeta({
   },
 })
 
-const { signIn: _signIn, user, session, loggedIn } = useAuth()
+const { signIn: _signIn, openWallet } = useAuth()
 
 const loading = ref(false)
 
@@ -18,7 +18,7 @@ async function signIn(provider: Provider) {
 
   const { error } = await _signIn.social({
     provider,
-    callbackURL: 'http://localhost:3001'
+    callbackURL: 'http://localhost:3001',
   })
   if (error) {
     console.log(error.message)
@@ -44,6 +44,15 @@ async function signIn(provider: Provider) {
           </p>
         </div>
         <div class="grid gap-4">
+          <Button
+            variant="outline"
+            class="w-full"
+            size="lg"
+            @click="async () => await openWallet('keplrextension')"
+          >
+            <AppLoading v-if="loading" />
+            Sign in with Keplr
+          </Button>
           <Button
             variant="outline"
             class="w-full"

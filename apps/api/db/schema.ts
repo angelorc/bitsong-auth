@@ -1,15 +1,17 @@
-import { boolean, jsonb, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
+import { boolean, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 import { uuidv7 } from 'uuidv7'
 
 /*
-  * AUTH SCHEMA
-  */
+ * AUTH SCHEMA
+ */
 export const auth_users = pgTable('auth_users', {
   id: text('id').primaryKey(),
+  isWeb3: boolean('is_web3'),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').notNull(),
   image: text('image'),
+  selectedWallet: text('selected_wallet'),
   createdAt: timestamp('created_at').notNull(),
   updatedAt: timestamp('updated_at').notNull(),
 })
@@ -50,12 +52,24 @@ export const auth_verifications = pgTable('auth_verifications', {
   updatedAt: timestamp('updated_at'),
 })
 
+export const auth_wallets = pgTable('auth_wallets', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => auth_users.id),
+  chainType: text('chain_type').notNull(),
+  chainName: text('chain_name').notNull(),
+  coinType: integer('coin_type').notNull(),
+  address: text('address').notNull().unique(),
+  pubkey: text('pubkey').notNull(),
+  parentPubkey: text('parent_pubkey'),
+  walletType: text('wallet_type').notNull(),
+  createdAt: timestamp('created_at'),
+  updatedAt: timestamp('updated_at'),
+})
+
 export const shares = pgTable('shares', {
   id: text('id').$defaultFn(() => uuidv7()).primaryKey(),
   userId: text('user_id').notNull().references(() => auth_users.id),
   share: text('share').notNull(),
   backup_share: text('backup_share'),
-  addresses: jsonb().$type<{ cosmos: { [key: string]: string } }>().notNull(),
-  pubkeys: jsonb().$type<{ cosmos: { 639: string, 118: string } }>().notNull(),
   createdAt: timestamp().defaultNow().notNull(),
 })

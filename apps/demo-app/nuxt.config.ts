@@ -24,9 +24,14 @@ export default defineNuxtConfig({
     },
   },
 
+  devServer: {
+    port: 3001,
+  },
+
   future: {
     compatibilityVersion: 4,
   },
+
   compatibilityDate: '2025-02-04',
 
   eslint: {

@@ -1,5 +1,5 @@
 {
-  "id": "490b5677-bdd3-4426-9285-854a406d4aba",
+  "id": "211a4e09-8845-4645-ab21-0565d38aad8a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -202,6 +202,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "is_web3": {
+          "name": "is_web3",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
         "name": {
           "name": "name",
           "type": "text",
@@ -222,6 +228,12 @@
         },
         "image": {
           "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "selected_wallet": {
+          "name": "selected_wallet",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -304,6 +316,107 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.auth_wallets": {
+      "name": "auth_wallets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chain_type": {
+          "name": "chain_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chain_name": {
+          "name": "chain_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coin_type": {
+          "name": "coin_type",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pubkey": {
+          "name": "pubkey",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parent_pubkey": {
+          "name": "parent_pubkey",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wallet_type": {
+          "name": "wallet_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "auth_wallets_user_id_auth_users_id_fk": {
+          "name": "auth_wallets_user_id_auth_users_id_fk",
+          "tableFrom": "auth_wallets",
+          "tableTo": "auth_users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "auth_wallets_address_unique": {
+          "name": "auth_wallets_address_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "address"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.shares": {
       "name": "shares",
       "schema": "",
@@ -331,18 +444,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
-        },
-        "addresses": {
-          "name": "addresses",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "pubkeys": {
-          "name": "pubkeys",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
         },
         "createdAt": {
           "name": "createdAt",

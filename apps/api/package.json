@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@bitsongjs/siwco": "0.0.1-alpha.3",
+    "@bitsong-auth/better-auth-plugin": "workspace:*",
     "@chain-registry/types": "^0.50.57",
     "@cosmjs/amino": "^0.33.0",
     "@cosmjs/crypto": "^0.33.0",

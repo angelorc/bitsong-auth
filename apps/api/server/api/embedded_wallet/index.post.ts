@@ -9,7 +9,7 @@ import type { Chain } from '@chain-registry/types'
 import { fromBase64, toBech32 } from '@cosmjs/encoding'
 import { rawSecp256k1PubkeyToRawAddress } from '@cosmjs/amino'
 import { verifySignature } from '~~/server/utils/crypto'
-import { shares } from '~~/db/schema'
+import { auth_wallets, shares } from '~~/db/schema'
 import { db } from '~~/db'
 
 const chains: Record<string, Chain> = {
@@ -119,6 +119,13 @@ export default defineEventHandler(async (event) => {
           userId: auth.user.id,
           share,
           backup_share,
+        })
+
+      await tx
+        .insert(auth_wallets)
+        .values({
+          userId: auth.user.id,
+          walletType: 'embedded',
           addresses: {
             cosmos: {
               bitsong: _data.addresses.bitsong,
