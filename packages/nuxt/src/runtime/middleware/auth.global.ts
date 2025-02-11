@@ -74,7 +74,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       }
     }
     else {
-      if (to.path === redirectUserTo) {
+      if (to.path === redirectGuestTo) {
         return
       }
 
