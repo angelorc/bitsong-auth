@@ -18,13 +18,14 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     addPlugin(resolve('./runtime/plugins/quirks'))
+    addImportsDir(resolve('./runtime/composables'))
+    addPlugin(resolve('./runtime/plugins/iframe.client'))
     addPlugin({
       src: resolve('./runtime/plugins/auth.client'),
       mode: 'client',
       order: 1,
     })
     addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: 0 })
-    addImportsDir(resolve('./runtime/composables'))
     addRouteMiddleware({
       name: 'auth',
       path: resolve('./runtime/middleware/auth.global'),

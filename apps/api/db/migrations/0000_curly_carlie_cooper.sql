@@ -22,6 +22,7 @@ CREATE TABLE "auth_sessions" (
 	"updated_at" timestamp NOT NULL,
 	"ip_address" text,
 	"user_agent" text,
+	"selected_wallet" text,
 	"user_id" text NOT NULL,
 	CONSTRAINT "auth_sessions_token_unique" UNIQUE("token")
 );
@@ -33,7 +34,6 @@ CREATE TABLE "auth_users" (
 	"email" text NOT NULL,
 	"email_verified" boolean NOT NULL,
 	"image" text,
-	"selected_wallet" text,
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp NOT NULL,
 	CONSTRAINT "auth_users_email_unique" UNIQUE("email")

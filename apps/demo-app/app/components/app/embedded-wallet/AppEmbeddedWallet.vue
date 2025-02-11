@@ -1,19 +1,25 @@
 <script lang="ts" setup>
-const { wallet, fetchSession, createWallet } = useAuth()
+const { selectedWallet, fetchSession, wallets } = useAuth()
+const { createWallet } = useIframe()
 
-const address = computed(() => wallet?.value?.addresses?.cosmos?.bitsong)
+// const address = computed(() => selectedWallet?.value?.address)
+const address = computed(() => wallets.value?.find(w => w.chainName === 'bitsong')?.address)
 
 const loading = ref(false)
 
 async function newWallet() {
+  console.log('Creating new wallet...')
   try {
     loading.value = true
-    const address = await createWallet()
-    alert(`New wallet created: ${address}`)
+    console.log('loading', loading.value)
+    const { error } = await createWallet()
+    if (error) {
+      throw new Error(error)
+    }
     await fetchSession()
   }
   catch (e) {
-    console.error(`Error - ${(e as Error).message}`)
+    alert((e as Error).message)
   }
   finally {
     loading.value = false

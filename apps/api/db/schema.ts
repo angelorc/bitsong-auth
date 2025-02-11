@@ -11,7 +11,6 @@ export const auth_users = pgTable('auth_users', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').notNull(),
   image: text('image'),
-  selectedWallet: text('selected_wallet'),
   createdAt: timestamp('created_at').notNull(),
   updatedAt: timestamp('updated_at').notNull(),
 })
@@ -24,6 +23,7 @@ export const auth_sessions = pgTable('auth_sessions', {
   updatedAt: timestamp('updated_at').notNull(),
   ipAddress: text('ip_address'),
   userAgent: text('user_agent'),
+  selectedWallet: text('selected_wallet'),
   userId: text('user_id').notNull().references(() => auth_users.id),
 })
 

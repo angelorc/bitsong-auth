@@ -8,6 +8,7 @@ export default defineNuxtPlugin({
     // Flag if request is cached
     nuxtApp.payload.isCached = Boolean(useRequestEvent()?.context.cache)
     if (nuxtApp.payload.serverRendered && !nuxtApp.payload.prerenderedAt && !nuxtApp.payload.isCached) {
+      console.log('auth.server.ts: serverRendered && !prerenderedAt && !isCached')
       await useAuth().fetchSession()
     }
   },

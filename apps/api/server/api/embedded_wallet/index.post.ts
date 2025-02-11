@@ -8,6 +8,7 @@ import { chain as nobleChain } from 'chain-registry/mainnet/noble/index.js'
 import type { Chain } from '@chain-registry/types'
 import { fromBase64, toBech32 } from '@cosmjs/encoding'
 import { rawSecp256k1PubkeyToRawAddress } from '@cosmjs/amino'
+import { generateId } from 'better-auth'
 import { verifySignature } from '~~/server/utils/crypto'
 import { auth_wallets, shares } from '~~/db/schema'
 import { db } from '~~/db'
@@ -121,26 +122,22 @@ export default defineEventHandler(async (event) => {
           backup_share,
         })
 
-      await tx
-        .insert(auth_wallets)
-        .values({
-          userId: auth.user.id,
-          walletType: 'embedded',
-          addresses: {
-            cosmos: {
-              bitsong: _data.addresses.bitsong,
-              cosmoshub: _data.addresses.cosmoshub,
-              osmosis: _data.addresses.osmosis,
-              noble: _data.addresses.noble,
-            },
-          },
-          pubkeys: {
-            cosmos: {
-              639: _data.pubkeys['639'],
-              118: _data.pubkeys['118'],
-            },
-          },
-        })
+      for (const chain of Object.keys(_data.addresses)) {
+        const coinType = chain === 'bitsong' ? 639 : chains[chain].slip44 ?? 0
+        const address = _data.addresses[chain]
+        await tx
+          .insert(auth_wallets)
+          .values({
+            id: generateId(),
+            userId: auth.user.id,
+            chainType: 'cosmos',
+            chainName: chain,
+            coinType: coinType,
+            address,
+            pubkey: _data.pubkeys[coinType],
+            walletType: 'embedded',
+          })
+      }
     })
 
     return {

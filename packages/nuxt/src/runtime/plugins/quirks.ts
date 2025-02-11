@@ -23,7 +23,7 @@ import { defineNuxtPlugin, useCookie } from '#imports'
 
 export default defineNuxtPlugin({
   name: 'quirks:plugin',
-  order: -100,
+  order: -1,
   async setup(nuxtApp) {
     const bitsong = {
       ..._bitsong,

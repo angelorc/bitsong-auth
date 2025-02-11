@@ -1,5 +1,5 @@
 {
-  "id": "211a4e09-8845-4645-ab21-0565d38aad8a",
+  "id": "5ec004e8-d689-4044-a6cb-43a45838dc0c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -155,6 +155,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "selected_wallet": {
+          "name": "selected_wallet",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "user_id": {
           "name": "user_id",
           "type": "text",
@@ -228,12 +234,6 @@
         },
         "image": {
           "name": "image",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "selected_wallet": {
-          "name": "selected_wallet",
           "type": "text",
           "primaryKey": false,
           "notNull": false

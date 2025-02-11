@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { createAuthEndpoint } from 'better-auth/plugins'
 import { mergeSchema } from 'better-auth/db'
 import { validateLogin } from './utils'
-import { logger, setSessionCookie } from 'better-auth'
+import { deleteSessionCookie, logger, setSessionCookie } from 'better-auth'
 import { chain } from 'chain-registry/mainnet/bitsong'
 import { coin } from '@cosmjs/amino'
 
@@ -84,18 +84,21 @@ const schema = {
       isWeb3: {
         type: 'boolean',
         required: false,
-      },
-      selectedWallet: {
-        type: 'string',
-        required: false
       }
     },
+  },
+  session: {
+    fields: {
+      selectedWallet: {
+        type: 'string',
+        required: true,
+      }
+    }
   },
 } satisfies AuthPluginSchema
 
 export interface UserWithWeb3 extends User {
   isWeb3: boolean
-  selectedWallet?: string
 }
 
 export interface Web3Options {
@@ -285,14 +288,13 @@ export const bitsong = (options?: Web3Options) => {
             }
           }
 
-          await ctx.context.internalAdapter.updateUser(user.id, {
-            selectedWallet: bitsongAddress,
-          })
-
           const session = await ctx.context.internalAdapter.createSession(
             user.id,
             ctx.headers,
             ctx.body.rememberMe === false,
+            {
+              selectedWallet: bitsongAddress,
+            }
           );
 
           if (!session) {
@@ -307,13 +309,7 @@ export const bitsong = (options?: Web3Options) => {
 
           await setSessionCookie(
             ctx,
-            { 
-              session: {
-                ...session,
-                test: 'prova'
-              },
-              user
-            }, 
+            { session, user }, 
             ctx.body.rememberMe === false
           )
 
@@ -326,7 +322,6 @@ export const bitsong = (options?: Web3Options) => {
 							name: user.name,
 							image: user.image,
               isWeb3: user.isWeb3,
-              selectedWallet: user.selectedWallet,
 							createdAt: user.createdAt,
 							updatedAt: user.updatedAt,
 						},

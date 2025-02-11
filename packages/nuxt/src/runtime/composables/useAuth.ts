@@ -7,8 +7,6 @@ import type {
 } from 'better-auth/client'
 import type { RouteLocationRaw } from 'vue-router'
 // import { customSessionClient } from 'better-auth/client/plugins'
-import { createParentIFrameRPCSession } from 'safe-rpc-iframe'
-import type { EncryptedRPCSession } from 'safe-rpc-iframe'
 // import type { WalletOptions } from '@quirks/core'
 import { useConfig, useConnect } from '@quirks/vue'
 import { toMessage } from '@bitsongjs/siwco'
@@ -37,51 +35,13 @@ export const SignResponseSchema = z.object({
 export type SignResponse = z.infer<typeof SignResponseSchema>
 
 type WalletInfo = {
-  addresses: {
-    cosmos: {
-      bitsong: string
-      osmosis: string
-      cosmoshub: string
-      noble: string
-      [key: string]: string
-    }
-  }
-  pubkeys: {
-    cosmos: {
-      639: string
-      118: string
-      [key: string]: string
-    }
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface IParentFrameRPCInterface {}
-
-export interface IChildFrameRPCInterface {
-  createWallet(): Promise<string | undefined>
-}
-
-abstract class InternalLogic {
-  peer: IChildFrameRPCInterface
-
-  rpcSession: EncryptedRPCSession
-
-  constructor(peer: IChildFrameRPCInterface, rpcSession: EncryptedRPCSession) {
-    this.peer = peer
-    this.rpcSession = rpcSession
-  }
-
-  dispose() {
-    this.rpcSession.dispose()
-  }
-}
-
-export class ParentRPCHandlerClass extends InternalLogic implements IParentFrameRPCInterface {
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor(peer: IChildFrameRPCInterface, rpcSession: EncryptedRPCSession) {
-    super(peer, rpcSession)
-  }
+  chainType: string
+  chainName: string
+  coinType: number
+  address: string
+  pubkey: string
+  parentPubkey: string | null
+  walletType: string
 }
 
 interface AuthParams {
@@ -104,18 +64,12 @@ export function useAuth(params?: AuthParams) {
   const user = useState<InferUserFromClient<ClientOptions> | null>('auth:user', () => null)
   const wallets = useState<WalletInfo[] | null>('auth:wallets', () => null)
   const sessionFetching = import.meta.server ? ref(false) : useState('auth:sessionFetching', () => false)
-  const iframe = useState<ParentRPCHandlerClass | null>('auth:iframe', () => null)
   // const selectedWallet = useState<WalletOptions | null>('selectedWallet', () => null)
 
-  async function createIFrame(src: string): Promise<ParentRPCHandlerClass> {
-    console.log('creating iframe')
-    const session = await createParentIFrameRPCSession(src)
-    console.log('session', session)
-
-    return session.registerHandlerClass<ParentRPCHandlerClass, IChildFrameRPCInterface>(
-      (peer, session) => new ParentRPCHandlerClass(peer, session),
-    )
-  }
+  const selectedWallet = computed(() => {
+    const selected = session.value?.selectedWallet || null
+    return wallets.value?.find(w => w.address === selected) || null
+  })
 
   const client = createAuthClient({
     // baseURL: url.origin,
@@ -134,16 +88,6 @@ export function useAuth(params?: AuthParams) {
     redirectGuestTo: '/',
   })
 
-  const init = async () => {
-    if (iframe.value === null) {
-      iframe.value = await createIFrame(`${baseURL}/iframe`)
-    }
-  }
-
-  const createWallet = async () => {
-    return iframe.value?.peer.createWallet()
-  }
-
   const fetchSession = async () => {
     if (sessionFetching.value) {
       console.log('already fetching session')
@@ -155,6 +99,7 @@ export function useAuth(params?: AuthParams) {
         headers,
       },
     })
+    console.log('session fetched', data)
     session.value = data?.session || null
     user.value = data?.user || null
     wallets.value = data?.wallets || null
@@ -226,8 +171,6 @@ export function useAuth(params?: AuthParams) {
   async function openWallet(wallet_name: string) {
     try {
       const wallet = _wallets.value.find(w => w.options.wallet_name === wallet_name)
-      console.log('wallet', wallet)
-      console.log('name', wallet_name)
       if (wallet && !wallet.injected) {
         return
       }
@@ -244,6 +187,7 @@ export function useAuth(params?: AuthParams) {
     session,
     user,
     wallets,
+    selectedWallet,
     loggedIn: computed(() => !!session.value),
     signIn: client.signIn,
     signUp: client.signUp,
@@ -259,8 +203,6 @@ export function useAuth(params?: AuthParams) {
     options,
     fetchSession,
     client,
-    createWallet,
-    init,
     openWallet,
   }
 }

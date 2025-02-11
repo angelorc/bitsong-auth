@@ -54,7 +54,8 @@ async function createAndSignCreateWalletMsg(chainName: string = 'bitsong') {
 
     const chain = await getChainByName(chainName)
 
-    const url = useRequestURL()
+    // const url = useRequestURL()
+    const url = new URL('http://localhost:3001')
     const message = toMessage({
       address: account.address,
       chainId: chain.chain_id,
@@ -117,14 +118,14 @@ export async function signAminoADR36(data: ADR36AminoSignDoc): Promise<AminoSign
   return signer.signAmino(data.address, signDoc)
 }
 
-export async function createWorkerWallet(): Promise<string | undefined> {
+export async function createWorkerWallet(): Promise<{ data?: string, error?: string }> {
   // 1. Generate new entropy
   entropy = Random.getBytes(32)
 
   // 2. Generate 3 shares from entropy
   const [share1, share2, share3] = await split(entropy, 3, 2)
   if (!share1 || !share2 || !share3) {
-    throw new Error('some share is missing')
+    return { error: 'some share is missing' }
   }
 
   // 3. Get Offline Signer
@@ -157,13 +158,13 @@ export async function createWorkerWallet(): Promise<string | undefined> {
     },
   })
   if (error) {
-    throw new Error(error)
+    return { error }
   }
 
   // 6. Store share1 on local idb
   await set(`bitsong-wallet:${data.user_id}:${data.address}`, toBase64(share1))
 
-  return bitsong?.address
+  return { data: data.address }
 }
 
 export async function assertWalletLocal({
