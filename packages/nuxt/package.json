@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@bitsong-auth/better-auth-plugin": "workspace:*",
+    "@bitsongjs/siwco": "0.0.1-alpha.3",
     "@nuxt/kit": "^3.15.4",
     "@quirks/nuxt": "^0.2.32",
     "@quirks/ssr": "^0.1.3",
