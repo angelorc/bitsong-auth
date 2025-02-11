@@ -64,6 +64,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   watch(loggedIn, (value) => {
+    console.log('loggedIn changed', value)
     if (value) {
       if (only === 'guest') {
         if (to.path === redirectGuestTo) {
