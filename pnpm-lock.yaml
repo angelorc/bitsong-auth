@@ -171,6 +171,9 @@ importers:
       nuxt:
         specifier: ^3.15.4
         version: 3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.1)(db0@0.2.3(drizzle-orm@0.38.4(kysely@0.27.5)(postgres@3.4.5)(react@19.0.0)))(drizzle-orm@0.38.4(kysely@0.27.5)(postgres@3.4.5)(react@19.0.0))(eslint@9.19.0(jiti@2.4.2))(idb-keyval@6.2.1)(ioredis@5.5.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.34.5)(terser@5.38.1)(typescript@5.7.3)(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0)
+      radix-vue:
+        specifier: ^1.9.12
+        version: 1.9.13(vue@3.5.13(typescript@5.7.3))
       safe-rpc-iframe:
         specifier: ^0.1.8
         version: 0.1.8(safe-rpc@0.1.8)
