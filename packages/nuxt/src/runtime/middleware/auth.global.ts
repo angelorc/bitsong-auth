@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 import { useAuth } from '../composables/useAuth'
-import { defineNuxtRouteMiddleware, navigateTo } from '#imports'
+import { defineNuxtRouteMiddleware, navigateTo, watch } from '#imports'
 
 type MiddlewareOptions = false | {
   /**
@@ -62,4 +62,23 @@ export default defineNuxtRouteMiddleware(async (to) => {
     }
     return navigateTo(redirectGuestTo)
   }
+
+  watch(loggedIn, (value) => {
+    if (value) {
+      if (only === 'guest') {
+        if (to.path === redirectGuestTo) {
+          return
+        }
+
+        return navigateTo(redirectUserTo)
+      }
+    }
+    else {
+      if (to.path === redirectUserTo) {
+        return
+      }
+
+      return navigateTo(redirectGuestTo)
+    }
+  })
 })
