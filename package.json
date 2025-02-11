@@ -2,10 +2,13 @@
   "name": "bitsong-auth",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "pkgs": "pnpm install --filter=./packages/* && turbo run build --filter=./packages/better-auth-plugin && cd packages/nuxt && npx nuxt-module-build build --stub && cd ../../apps/demo-app && pnpm postinstall",
+    "build:api": "turbo run build --filter=./apps/api",
+    "build:demo": "turbo run build --filter=./apps/demo-app",
+    "build": "turbo run build --filter=./apps/*",
     "dev": "turbo run dev --filter=./apps/*",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:init": "cd apps/api && pnpm db:init",
     "pg:start": "docker compose up -d",
     "pg:stop": "docker compose down"
   },
