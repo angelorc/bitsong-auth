@@ -55,7 +55,7 @@ async function createAndSignCreateWalletMsg(chainName: string = 'bitsong') {
     const chain = await getChainByName(chainName)
 
     // const url = useRequestURL()
-    const url = new URL('http://localhost:3001')
+    const url = import.meta.dev ? new URL('http://localhost:3001') : new URL('https://demo-auth.bitsong.io')
     const message = toMessage({
       address: account.address,
       chainId: chain.chain_id,

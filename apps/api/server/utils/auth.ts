@@ -25,7 +25,7 @@ export function serverAuth() {
         },
       }),
       baseURL: getBaseURL(),
-      trustedOrigins: ['http://localhost:3001'],
+      trustedOrigins: ['http://localhost:3001', 'https://demo-auth.bitsong.io'],
       emailAndPassword: {
         enabled: false,
       },
