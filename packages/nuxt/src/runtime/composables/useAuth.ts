@@ -52,7 +52,7 @@ export function useAuth(params?: AuthParams) {
   const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 12)
 
   const {
-    baseURL = 'http://localhost:3000',
+    baseURL = import.meta.dev ? 'http://localhost:3000' : 'https://bitsong-auth.vercel.app',
   } = params || {}
 
   const { wallets: _wallets } = useConfig()

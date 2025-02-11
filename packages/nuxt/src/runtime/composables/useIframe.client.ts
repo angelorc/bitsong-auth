@@ -32,7 +32,7 @@ export class ParentRPCHandlerClass extends InternalLogic implements IParentFrame
 }
 
 export function useIframe() {
-  const baseURL = 'http://localhost:3000'
+  const baseURL = import.meta.dev ? 'http://localhost:3000' : 'https://bitsong-auth.vercel.app'
 
   const iframe = useState<ParentRPCHandlerClass | null>('auth:iframe', () => null)
 
