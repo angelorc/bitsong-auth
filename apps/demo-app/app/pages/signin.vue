@@ -18,7 +18,7 @@ async function signIn(provider: Provider) {
 
   const { error } = await _signIn.social({
     provider,
-    callbackURL: 'http://localhost:3001',
+    callbackURL: import.meta.dev ? 'http://localhost:3001' : 'https://bitsong-auth.vercel.app/api/auth/callback/google',
   })
   if (error) {
     console.log(error.message)
