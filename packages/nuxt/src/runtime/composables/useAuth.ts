@@ -85,6 +85,7 @@ export function useAuth(params?: AuthParams) {
       return
     }
     sessionFetching.value = true
+    console.log('headers', headers)
     const { data, error } = await client.getSession({
       fetchOptions: {
         headers,
