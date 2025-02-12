@@ -68,7 +68,7 @@ export default defineNuxtPlugin({
           return navigateTo(redirectGuestTo)
         }
       }),
-
+      { global: true },
     )
   },
 })
