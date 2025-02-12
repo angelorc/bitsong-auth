@@ -18,7 +18,7 @@ async function signIn(provider: Provider) {
 
   const { error } = await _signIn.social({
     provider,
-    callbackURL: import.meta.dev ? 'http://localhost:3001' : 'https://demo-auth.bitsong.io',
+    callbackURL: useRuntimeConfig().public.callbackUrl as string,
   })
   if (error) {
     console.log(error.message)

@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   runtimeConfig: {
+    trustedOrigin: 'http://localhost:3001', // https://demo-auth.bitsong.io
     public: {
       auth: {
         redirectUserTo: '/',
@@ -24,6 +25,12 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-11-01',
+
+  nitro: {
+    experimental: {
+      asyncContext: true,
+    },
+  },
 
   eslint: {
     config: {

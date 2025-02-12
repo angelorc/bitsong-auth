@@ -1,6 +1,6 @@
 export default defineEventHandler((event) => {
   handleCors(event, {
-    origin: ['http://localhost:3001', 'https://demo-auth.bitsong.io'],
+    origin: useRuntimeConfig(event).trustedOrigin.split(','),
     methods: '*',
     credentials: true,
     preflight: {

@@ -3,6 +3,12 @@ import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addRouteMid
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
 
+declare module 'nuxt/schema' {
+  interface RuntimeConfig {
+    apiUrl: string
+  }
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'my-module',
@@ -12,6 +18,8 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {},
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+
+    nuxt.options.runtimeConfig.public.apiUrl = nuxt.options.runtimeConfig.public.apiUrl || 'http://localhost:3000'
 
     if (!hasNuxtModule('@quirks/nuxt', nuxt)) {
       await installModule('@quirks/nuxt')

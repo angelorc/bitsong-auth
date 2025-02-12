@@ -17,6 +17,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      apiUrl: 'http://localhost:3000', // https://demo-api-auth.bitsong.io
+      callbackUrl: 'http://localhost:3001', // https://demo-auth.bitsong.io
       auth: {
         redirectUserTo: '/',
         redirectGuestTo: '/signin',

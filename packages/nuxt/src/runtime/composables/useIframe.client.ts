@@ -1,6 +1,6 @@
 import type { EncryptedRPCSession } from 'safe-rpc-iframe'
 import { createParentIFrameRPCSession } from 'safe-rpc-iframe'
-import { useState } from '#imports'
+import { useRuntimeConfig, useState } from '#imports'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IParentFrameRPCInterface {}
@@ -32,7 +32,7 @@ export class ParentRPCHandlerClass extends InternalLogic implements IParentFrame
 }
 
 export function useIframe() {
-  const baseURL = import.meta.dev ? 'http://localhost:3000' : 'https://demo-api-auth.bitsong.io'
+  const baseURL = useRuntimeConfig().public.apiUrl
 
   const iframe = useState<ParentRPCHandlerClass | null>('auth:iframe', () => null)
 

@@ -29,5 +29,8 @@
     "tailwindcss-animate": "^1.0.7",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "devDependencies": {
+    "encoding": "^0.1.13"
   }
 }
