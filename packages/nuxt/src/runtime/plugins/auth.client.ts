@@ -1,5 +1,5 @@
-import { useAuth } from '../composables/useAuth'
-import { defineNuxtPlugin } from '#imports'
+import {} from 'nuxt/app'
+import { defineNuxtPlugin, useAuth } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   console.log('auth.client.ts')

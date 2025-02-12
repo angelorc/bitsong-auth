@@ -1,6 +1,5 @@
 import { defu } from 'defu'
-import { useAuth } from '../composables/useAuth'
-import { addRouteMiddleware, defineNuxtPlugin, defineNuxtRouteMiddleware, navigateTo } from '#imports'
+import { addRouteMiddleware, defineNuxtPlugin, defineNuxtRouteMiddleware, navigateTo, useAuth } from '#imports'
 
 type MiddlewareOptions = false | {
   /**

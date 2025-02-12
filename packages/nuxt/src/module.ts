@@ -21,20 +21,16 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.runtimeConfig.public.apiUrl = nuxt.options.runtimeConfig.public.apiUrl || 'http://localhost:3000'
 
-    if (!hasNuxtModule('@quirks/nuxt', nuxt)) {
-      await installModule('@quirks/nuxt')
-    }
+    // if (!hasNuxtModule('@quirks/nuxt', nuxt)) {
+    //   await installModule('@quirks/nuxt')
+    // }
 
     addImports([{
       name: 'useAuth',
       from: resolve('./runtime/composables/useAuth'),
     }])
-    addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: -100 })
-    addPlugin({
-      src: resolve('./runtime/plugins/auth.client'),
-      mode: 'client',
-      order: -90,
-    })
+    addPlugin(resolve('./runtime/plugins/auth.server'))
+    addPlugin(resolve('./runtime/plugins/auth.client'))
     // addPlugin(resolve('./runtime/plugins/quirks'))
     // addPlugin(resolve('./runtime/plugins/iframe.client'))
     addPlugin(resolve('./runtime/plugins/auth-redirect'))
