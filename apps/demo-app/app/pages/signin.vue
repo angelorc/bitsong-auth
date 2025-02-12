@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 const { signIn: _signIn } = useAuth()
-const { openWallet } = useWallet()
+// const { openWallet } = useWallet()
 
 const loading = ref(false)
 
@@ -42,7 +42,7 @@ async function signIn(provider: Provider) {
           </p>
         </div>
         <div class="grid gap-4">
-          <Button
+          <!-- <Button
             variant="outline"
             class="w-full"
             size="lg"
@@ -50,7 +50,7 @@ async function signIn(provider: Provider) {
           >
             <AppLoading v-if="loading" />
             Sign in with Keplr
-          </Button>
+          </Button> -->
           <Button
             variant="outline"
             class="w-full"

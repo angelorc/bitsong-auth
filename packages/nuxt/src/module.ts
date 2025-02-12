@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addImportsDir, hasNuxtModule, installModule } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir, hasNuxtModule, installModule, addImports } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -32,8 +32,8 @@ export default defineNuxtModule<ModuleOptions>({
       mode: 'client',
       order: -90,
     })
-    addPlugin(resolve('./runtime/plugins/quirks'))
-    addPlugin(resolve('./runtime/plugins/iframe.client'))
+    // addPlugin(resolve('./runtime/plugins/quirks'))
+    // addPlugin(resolve('./runtime/plugins/iframe.client'))
     addPlugin(resolve('./runtime/plugins/auth-redirect'))
     // addRouteMiddleware({
     //   name: 'auth',
