@@ -18,7 +18,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { redirect: process.env.NUXT_REDIRECT_TO || '/' },
+    '/': {
+      redirect: process.env.NUXT_REDIRECT_TO || 'http://localhost:3001',
+    },
   },
 
   devServer: {
