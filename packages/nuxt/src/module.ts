@@ -25,7 +25,10 @@ export default defineNuxtModule<ModuleOptions>({
       await installModule('@quirks/nuxt')
     }
 
-    addImportsDir(resolve('./runtime/composables'))
+    addImports([{
+      name: 'useAuth',
+      from: resolve('./runtime/composables/useAuth'),
+    }])
     addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: -100 })
     addPlugin({
       src: resolve('./runtime/plugins/auth.client'),
