@@ -28,7 +28,7 @@ export function serverAuth() {
       advanced: {
         crossSubDomainCookies: {
           enabled: true,
-          domain: 'bitsong.io',
+          // domain: 'bitsong.io',
         },
       },
       trustedOrigins: useRuntimeConfig(useEvent()).trustedOrigin.split(','),
@@ -75,8 +75,13 @@ export function serverAuth() {
       ],
       hooks: {
         after: createAuthMiddleware(async (ctx) => {
-          if (ctx.path === '/callback/:id' && ctx.params?.id === 'google') {
-            console.log('google callback, attaching wallet....')
+          if (ctx.path === '/callback/:id') {
+            if (ctx.params?.id === 'google') {
+              console.log('google callback, attaching wallet....')
+            }
+            else if (ctx.params?.id === 'github') {
+              console.log('github callback, attaching wallet....')
+            }
           }
 
           // if (ctx.path === '/sign-in/bitsong') {

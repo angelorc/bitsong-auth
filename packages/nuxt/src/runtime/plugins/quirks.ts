@@ -75,6 +75,6 @@ export default defineNuxtPlugin({
     const configWithCookie = initialStateWithCookie(config, JSON.stringify(cookie.value))
 
     nuxtApp.vueApp.use(quirksPlugin, configWithCookie)
-    console.log('Quirks plugin injected!')
+    console.log('[quirks] plugin injected!')
   },
 })

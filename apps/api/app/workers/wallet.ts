@@ -175,7 +175,6 @@ export async function assertWalletLocal({
   address: string
 }) {
   const wallet = await get(`bitsong-wallet:${user_id}:${address}`)
-  console.log('wallet', wallet)
   if (!wallet) {
     throw new Error('local share not found')
   }

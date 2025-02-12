@@ -37,9 +37,8 @@ export function useIframe() {
   const iframe = useState<ParentRPCHandlerClass | null>('auth:iframe', () => null)
 
   async function createIFrame(src: string): Promise<ParentRPCHandlerClass> {
-    console.log('creating iframe')
     const session = await createParentIFrameRPCSession(src)
-    console.log('session', session)
+    console.log('[iframe] parent session', session)
 
     return session.registerHandlerClass<ParentRPCHandlerClass, IChildFrameRPCInterface>(
       (peer, session) => new ParentRPCHandlerClass(peer, session),
@@ -47,7 +46,7 @@ export function useIframe() {
   }
 
   const init = async () => {
-    console.log('[useAuth] init')
+    console.log('[iframe] init')
     if (iframe.value === null) {
       iframe.value = await createIFrame(`${baseURL}/iframe`)
     }

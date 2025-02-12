@@ -81,20 +81,14 @@ export function useAuth(params?: AuthParams) {
 
   const fetchSession = async () => {
     if (sessionFetching.value) {
-      console.log('already fetching session')
       return
     }
     sessionFetching.value = true
-    console.log('headers', headers)
-    const { data, error } = await client.getSession({
+    const { data } = await client.getSession({
       fetchOptions: {
         headers,
       },
     })
-    console.log('session fetched', data)
-    if (data === null) {
-      console.log('error is', error)
-    }
     session.value = data?.session || null
     user.value = data?.user || null
     wallets.value = data?.wallets || null

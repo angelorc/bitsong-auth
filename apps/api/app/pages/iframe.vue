@@ -9,8 +9,7 @@ definePageMeta({
 
 async function initChild() {
   const session = await createChildIFrameRPCSession()
-  console.log('Child session created')
-  console.log(session)
+  console.log('[iframe] child session created')
 
   session.registerHandlerClass<ChildRPCHandlerClass, IParentFrameRPCInterface>(
     peer => new ChildRPCHandlerClass(peer),
