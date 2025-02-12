@@ -16,16 +16,8 @@ type Provider = 'github' | 'google'
 
 async function signIn(provider: Provider) {
   loading.value = true
-
-  const { error } = await _signIn.social({ provider })
-  if (error) {
-    console.log(error.message)
-    loading.value = false
-  }
-  else {
-    console.log('signed in')
-    await navigateTo('/')
-  }
+  await _signIn.social({ provider })
+  loading.value = false
 }
 </script>
 
