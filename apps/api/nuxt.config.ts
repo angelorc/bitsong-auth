@@ -16,6 +16,10 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/': { redirect: process.env.NUXT_REDIRECT_TO || '/' },
+  },
+
   devServer: {
     port: 3000,
   },
