@@ -118,7 +118,12 @@ export async function signAminoADR36(data: ADR36AminoSignDoc): Promise<AminoSign
   return signer.signAmino(data.address, signDoc)
 }
 
-export async function createWorkerWallet(): Promise<{ data?: string, error?: string }> {
+type StdResponse = {
+  data?: string
+  error?: string
+}
+
+export async function createWorkerWallet(): Promise<StdResponse> {
   // 1. Generate new entropy
   entropy = Random.getBytes(32)
 
