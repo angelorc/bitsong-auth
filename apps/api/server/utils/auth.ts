@@ -26,6 +26,7 @@ export function serverAuth() {
       }),
       baseURL: getBaseURL(),
       advanced: {
+        cookiePrefix: 'bitsong-auth',
         crossSubDomainCookies: {
           enabled: true,
           domain: useRuntimeConfig(useEvent()).crossSubDomainCookies,
