@@ -46,7 +46,7 @@ interface AuthParams {
 
 export function useAuth(params?: AuthParams) {
   const {
-    baseURL = useRuntimeConfig().public.apiUrl,
+    baseURL = useRuntimeConfig().public.apiUrl as string,
   } = params || {}
 
   const headers = import.meta.server ? useRequestHeaders() : undefined
@@ -85,12 +85,15 @@ export function useAuth(params?: AuthParams) {
       return
     }
     sessionFetching.value = true
-    const { data } = await client.getSession({
+    const { data, error } = await client.getSession({
       fetchOptions: {
         headers,
       },
     })
     console.log('session fetched', data)
+    if (data === null) {
+      console.log('error is', error)
+    }
     session.value = data?.session || null
     user.value = data?.user || null
     wallets.value = data?.wallets || null
