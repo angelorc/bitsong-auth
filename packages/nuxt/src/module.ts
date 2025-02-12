@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import { defineNuxtModule, addRouteMiddleware, addPlugin, createResolver, addImports } from '@nuxt/kit'
+import { defineNuxtModule, addRouteMiddleware, addPlugin, createResolver, hasNuxtModule, installModule } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -25,13 +25,13 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
 
+    if (!hasNuxtModule('@quirks/nuxt', nuxt)) {
+      await installModule('@quirks/nuxt')
+    }
+
     nuxt.hook('imports:dirs', (dirs) => {
       dirs.push(resolve(runtimeDir, 'composables'))
     })
-
-    // if (!hasNuxtModule('@quirks/nuxt', nuxt)) {
-    //   await installModule('@quirks/nuxt')
-    // }
 
     // addImports([{
     //   name: 'useAuth',
@@ -39,14 +39,12 @@ export default defineNuxtModule<ModuleOptions>({
     // }])
     addPlugin(resolve(runtimeDir, 'plugins', 'auth.client'))
     addPlugin(resolve(runtimeDir, 'plugins', 'auth.server'))
-    // addPlugin(resolve('./runtime/plugins/quirks'))
-    // addPlugin(resolve('./runtime/plugins/iframe.client'))
-    // addPlugin(resolve('./runtime/plugins/auth-redirect'))
+    addPlugin(resolve(runtimeDir, 'plugins', 'quirks'))
+    addPlugin(resolve(runtimeDir, 'plugins', 'iframe.client'))
     addRouteMiddleware({
       name: 'auth',
       path: resolve(runtimeDir, 'middleware', 'auth.global'),
       global: true,
     })
-    // addPlugin(resolve('./runtime/plugin'))
   },
 })

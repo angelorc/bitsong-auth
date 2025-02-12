@@ -5,7 +5,7 @@ export default defineNuxtPlugin({
   name: 'iframe:plugin',
   order: -1,
   parallel: false,
-  async setup(nuxtApp) {
+  async setup(_nuxtApp) {
     await useIframe().init()
   },
 })
