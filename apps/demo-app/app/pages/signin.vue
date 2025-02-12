@@ -17,7 +17,6 @@ type Provider = 'github' | 'google'
 async function signIn(provider: Provider) {
   loading.value = true
   await _signIn.social({ provider })
-  loading.value = false
 }
 </script>
 
