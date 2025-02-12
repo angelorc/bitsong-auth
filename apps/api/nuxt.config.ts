@@ -8,6 +8,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     trustedOrigin: 'http://localhost:3001', // https://demo-auth.bitsong.io
+    crossSubDomainCookies: 'localhost',
     public: {
       auth: {
         redirectUserTo: '/',

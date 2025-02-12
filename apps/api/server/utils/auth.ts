@@ -28,7 +28,7 @@ export function serverAuth() {
       advanced: {
         crossSubDomainCookies: {
           enabled: true,
-          // domain: 'bitsong.io',
+          domain: useRuntimeConfig(useEvent()).crossSubDomainCookies,
         },
       },
       trustedOrigins: useRuntimeConfig(useEvent()).trustedOrigin.split(','),
