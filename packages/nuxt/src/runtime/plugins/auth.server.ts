@@ -1,5 +1,5 @@
-import { useRequestEvent } from 'nuxt/app'
-import { defineNuxtPlugin, useAuth } from '#imports'
+import { } from 'nuxt/app'
+import { defineNuxtPlugin, useAuth, useRequestEvent } from '#imports'
 
 export default defineNuxtPlugin({
   name: 'better-auth-fetch-plugin',
