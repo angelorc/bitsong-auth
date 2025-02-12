@@ -31,6 +31,7 @@ declare module 'vue-router' {
 
 export default defineNuxtPlugin({
   name: 'auth-redirect',
+  parallel: false,
   setup() {
     addRouteMiddleware(
       'global-auth',
