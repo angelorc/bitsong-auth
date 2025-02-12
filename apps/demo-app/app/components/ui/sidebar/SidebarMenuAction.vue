@@ -28,5 +28,7 @@ const props = withDefaults(defineProps<PrimitiveProps & {
     )"
     :as="as"
     :as-child="asChild"
-  />
+  >
+    <slot />
+  </Primitive>
 </template>
