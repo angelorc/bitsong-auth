@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addRouteMiddleware, hasNuxtModule, installModule, addImports } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir, hasNuxtModule, installModule } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -34,11 +34,12 @@ export default defineNuxtModule<ModuleOptions>({
       order: 1,
     })
     addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: 0 })
-    addRouteMiddleware({
-      name: 'auth',
-      path: resolve('./runtime/middleware/auth.global'),
-      global: true,
-    })
+    addPlugin(resolve('./runtime/plugins/auth-redirect'))
+    // addRouteMiddleware({
+    //   name: 'auth',
+    //   path: resolve('./runtime/middleware/auth.global'),
+    //   global: true,
+    // })
     // addPlugin(resolve('./runtime/plugin'))
   },
 })
