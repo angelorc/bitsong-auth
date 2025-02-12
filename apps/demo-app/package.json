@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "@bitsong-auth/demo-app",
   "private": true,
   "type": "module",
   "scripts": {
