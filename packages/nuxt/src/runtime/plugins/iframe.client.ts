@@ -3,7 +3,7 @@ import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin({
   name: 'iframe:plugin',
-  order: 10,
+  order: -1,
   parallel: false,
   async setup(nuxtApp) {
     await useIframe().init()

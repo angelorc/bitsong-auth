@@ -25,15 +25,15 @@ export default defineNuxtModule<ModuleOptions>({
       await installModule('@quirks/nuxt')
     }
 
-    addPlugin(resolve('./runtime/plugins/quirks'))
     addImportsDir(resolve('./runtime/composables'))
-    addPlugin(resolve('./runtime/plugins/iframe.client'))
+    addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: -100 })
     addPlugin({
       src: resolve('./runtime/plugins/auth.client'),
       mode: 'client',
-      order: 1,
+      order: -90,
     })
-    addPlugin({ src: resolve('./runtime/plugins/auth.server'), mode: 'server', order: 0 })
+    addPlugin(resolve('./runtime/plugins/quirks'))
+    addPlugin(resolve('./runtime/plugins/iframe.client'))
     addPlugin(resolve('./runtime/plugins/auth-redirect'))
     // addRouteMiddleware({
     //   name: 'auth',

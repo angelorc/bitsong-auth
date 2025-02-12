@@ -7,7 +7,8 @@ definePageMeta({
   },
 })
 
-const { signIn: _signIn, openWallet } = useAuth()
+const { signIn: _signIn } = useAuth()
+const { openWallet } = useWallet()
 
 const loading = ref(false)
 
