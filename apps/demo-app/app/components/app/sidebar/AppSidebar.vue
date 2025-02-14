@@ -63,58 +63,62 @@ const { user, signOut } = useAuth()
 
     <SidebarContent>
       <SidebarGroup>
-        <SidebarMenu>
-          <SidebarMenuItem @click="navigateTo('/')">
-            <SidebarMenuButton class="font-semibold">
-              <component :is="LayoutDashboard" />
-              <span>Dashboard</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem @click="() => navigateTo('/user')">
-            <SidebarMenuButton class="font-semibold">
-              <component :is="Landmark" />
-              <span>User</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem @click="() => navigateTo('/wallet')">
-            <SidebarMenuButton class="font-semibold">
-              <component :is="Landmark" />
-              <span>Wallet</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton class="font-semibold">
-              <component :is="Landmark" />
-              <span>Earn</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton class="font-semibold">
-              <component :is="Store" />
-              <span>Explore Music</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton class="font-semibold">
-              <component :is="Store" />
-              <span>Fantokens</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem @click="navigateTo('/')">
+              <SidebarMenuButton class="font-semibold">
+                <component :is="LayoutDashboard" />
+                <span>Dashboard</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem @click="() => navigateTo('/user')">
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Landmark" />
+                <span>User</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem @click="() => navigateTo('/wallet')">
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Landmark" />
+                <span>Wallet</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Landmark" />
+                <span>Earn</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Store" />
+                <span>Explore Music</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Store" />
+                <span>Fantokens</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
       </SidebarGroup>
 
       <SidebarGroup>
         <SidebarGroupLabel class="text-muted-foreground font-semibold">
           Playlists
         </SidebarGroupLabel>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton class="font-semibold">
-              <component :is="Banknote" />
-              <span>Playlist 1</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Banknote" />
+                <span>Playlist 1</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
 
