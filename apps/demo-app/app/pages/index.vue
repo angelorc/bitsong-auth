@@ -86,14 +86,14 @@ const { data } = await useFetch(`/api/wallet-balance`, {
                 </TableCell>
                 <TableCell class="text-right">
                   <div class="font-medium">
-                    {{ formatNumber(b.formatted_amount, { maximumFractionDigits: 6 }) }}
+                    {{ formatNumber(b.formatted_amount, { maximumFractionDigits: 6 }) }} {{ b.symbol }}
                   </div>
                   <div class="hidden text-sm text-muted-foreground md:inline">
-                    {{ formatNumber(b.value_usd, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} USD
+                    $ {{ formatNumber(b.value_usd, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
                   </div>
                 </TableCell>
                 <TableCell class="text-right">
-                  {{ b.price ? formatNumber(b.price, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) : 0 }}
+                  $ {{ b.price ? formatNumber(b.price, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) : 0 }}
                 </TableCell>
               </TableRow>
             </TableBody>
