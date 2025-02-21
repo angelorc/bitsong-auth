@@ -83,7 +83,7 @@ const { user, signOut } = useAuth()
                 <span>Wallet</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
+            <SidebarMenuItem @click="() => navigateTo('/earn')">
               <SidebarMenuButton class="font-semibold">
                 <component :is="Landmark" />
                 <span>Earn</span>
