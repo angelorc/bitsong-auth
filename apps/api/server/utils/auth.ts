@@ -1,6 +1,5 @@
 import { betterAuth } from 'better-auth'
 import { createAuthMiddleware, customSession } from 'better-auth/plugins'
-import { getSessionFromCtx, sessionMiddleware } from 'better-auth/api'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { eq } from 'drizzle-orm'
 import { bitsong } from '@bitsong-auth/better-auth-plugin'
