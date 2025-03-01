@@ -22,10 +22,11 @@ const chains: Record<string, Chain> = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const auth = await serverAuth().api.getSession({
+    const auth = await serverAuth()
+    const session = await auth.api.getSession({
       headers: event.headers,
     })
-    if (!auth) {
+    if (!session) {
       return { error: 'user not found' }
     }
 
@@ -102,12 +103,12 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    await db.transaction(async (tx) => {
+    await db().transaction(async (tx) => {
       const [{ count: total }] = await tx
         .select({ count: count() })
         .from(shares)
         .where(
-          eq(shares.userId, auth.user.id),
+          eq(shares.userId, session.user.id),
         )
 
       if (total > 0) {
@@ -117,7 +118,7 @@ export default defineEventHandler(async (event) => {
       await tx
         .insert(shares)
         .values({
-          userId: auth.user.id,
+          userId: session.user.id,
           share,
           backup_share,
         })
@@ -129,7 +130,7 @@ export default defineEventHandler(async (event) => {
           .insert(auth_wallets)
           .values({
             id: generateId(),
-            userId: auth.user.id,
+            userId: session.user.id,
             chainType: 'cosmos',
             chainName: chain,
             coinType: coinType,
@@ -140,9 +141,15 @@ export default defineEventHandler(async (event) => {
       }
     })
 
+    const authCtx = await auth.$context
+    await authCtx.internalAdapter.updateSession(
+      session.session.token,
+      { selectedWallet: _data.addresses.bitsong },
+    )
+
     return {
       data: {
-        user_id: auth.user.id,
+        user_id: session.user.id,
         address: _data.addresses.bitsong,
       },
     }
