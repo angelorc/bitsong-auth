@@ -71,24 +71,24 @@ const { user, signOut } = useAuth()
                 <span>Dashboard</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem @click="() => navigateTo('/user')">
-              <SidebarMenuButton class="font-semibold">
-                <component :is="Landmark" />
-                <span>User</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem @click="() => navigateTo('/wallet')">
-              <SidebarMenuButton class="font-semibold">
-                <component :is="Landmark" />
-                <span>Wallet</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
             <SidebarMenuItem @click="() => navigateTo('/earn')">
               <SidebarMenuButton class="font-semibold">
                 <component :is="Landmark" />
                 <span>Earn</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
+            <SidebarMenuItem @click="() => navigateTo('/user')">
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Landmark" />
+                <span>User</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <!-- <SidebarMenuItem @click="() => navigateTo('/wallet')">
+              <SidebarMenuButton class="font-semibold">
+                <component :is="Landmark" />
+                <span>Wallet</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem> -->
             <SidebarMenuItem>
               <SidebarMenuButton class="font-semibold">
                 <component :is="Store" />

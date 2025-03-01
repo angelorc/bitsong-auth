@@ -30,13 +30,18 @@ const { data } = await useFetch(`/api/wallet-balance`, {
       </Card>
     </div>
 
-    <div class="grid gap-4 md:gap-8">
-      <Card class="xl:col-span-2">
+    <div
+      class="grid gap-4 md:gap-8"
+    >
+      <AppNoWalletFound v-if="!address" />
+      <Card
+        v-else
+        class="xl:col-span-2"
+      >
         <CardHeader class="flex flex-row items-center">
-          <div class="grid gap-2">
-            <CardTitle>Wallet</CardTitle>
-          </div>
+          <CardTitle>Wallet</CardTitle>
           <Button
+            v-if="address"
             as-child
             size="sm"
             class="ml-auto gap-1"

@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { ArrowUpRight, DollarSign } from 'lucide-vue-next'
 
+const { selectedWallet } = useAuth()
+const address = computed(() => selectedWallet?.value?.address)
+
 const { data } = await useFetch(`/api/balances`)
 
 const available = computed(() => parseInt(data.value?.data?.available.find(c => c.denom === 'ubtsg')?.amount ?? '0'))
@@ -95,7 +98,11 @@ const toValidatorStatus = (status: string) => {
     </div>
 
     <div class="grid gap-4 md:gap-8">
-      <Card class="xl:col-span-2">
+      <AppNoWalletFound v-if="!address" />
+      <Card
+        v-else
+        class="xl:col-span-2"
+      >
         <CardHeader class="flex flex-row items-center">
           <div class="grid gap-2">
             <CardTitle>Staking</CardTitle>
