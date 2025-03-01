@@ -46,6 +46,7 @@ interface BalanceResponse {
 
 export default defineEventHandler(async (event) => {
   const { data } = await authClient(event).getSession()
+  console.log('data', data)
   if (!data?.session.selectedWallet) {
     return { error: 'Unauthorized' }
   }
