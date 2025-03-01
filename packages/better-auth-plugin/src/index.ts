@@ -10,9 +10,8 @@ import { z } from 'zod'
 import { createAuthEndpoint } from 'better-auth/plugins'
 import { mergeSchema } from 'better-auth/db'
 import { validateLogin } from './utils'
-import { deleteSessionCookie, logger, setSessionCookie } from 'better-auth'
-import { chain } from 'chain-registry/mainnet/bitsong'
-import { coin } from '@cosmjs/amino'
+import { logger } from 'better-auth'
+import { setSessionCookie } from 'better-auth/cookies'
 
 const chains = ['bitsong', 'osmosis', 'cosmoshub', 'noble']
 
@@ -195,7 +194,7 @@ export const bitsong = (options?: Web3Options) => {
               status: 400,
               body: {
                 message: data.error,
-                status: 400,
+                status: '400',
               },
             })
           }
@@ -244,7 +243,7 @@ export const bitsong = (options?: Web3Options) => {
                 status: 500,
                 body: {
                   message: ERROR_CODES.FAILED_TO_CREATE_USER,
-                  status: 500,
+                  status: '500',
                 },
               })
             }
@@ -282,7 +281,7 @@ export const bitsong = (options?: Web3Options) => {
                 status: 500,
                 body: {
                   message: 'Failed to find user',
-                  status: 500,
+                  status: '500',
                 },
               })
             }
@@ -302,7 +301,7 @@ export const bitsong = (options?: Web3Options) => {
               status: 500,
               body: {
                 message: "Failed to create session",
-                status: 500,
+                status: '500',
               },
             });
           }

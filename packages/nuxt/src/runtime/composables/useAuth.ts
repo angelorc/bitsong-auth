@@ -6,8 +6,6 @@ import type {
   ClientOptions,
 } from 'better-auth/client'
 import type { RouteLocationRaw } from 'vue-router'
-// import { customSessionClient } from 'better-auth/client/plugins'
-// import type { WalletOptions } from '@quirks/core'
 import { z } from 'zod'
 import { bitsongClient } from '@bitsong-auth/better-auth-plugin'
 import { computed, navigateTo, ref, useRequestHeaders, useState, useRuntimeConfig } from '#imports'
@@ -80,6 +78,7 @@ export function useAuth(params?: AuthParams) {
   })
 
   const fetchSession = async () => {
+    console.log('fetching session')
     if (sessionFetching.value) {
       return
     }

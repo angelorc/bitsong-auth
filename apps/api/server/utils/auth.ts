@@ -11,7 +11,7 @@ import { db } from '../../db'
 // }
 
 async function getWallets(userId: string) {
-  return db.query.auth_wallets.findMany({
+  return db().query.auth_wallets.findMany({
     columns: {
       chainType: true,
       chainName: true,
@@ -29,7 +29,7 @@ let _auth: ReturnType<typeof betterAuth>
 export function serverAuth() {
   if (!_auth) {
     _auth = betterAuth({
-      database: drizzleAdapter(db, {
+      database: drizzleAdapter(db(), {
         provider: 'pg',
         schema: {
           user: auth_users,

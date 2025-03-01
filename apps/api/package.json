@@ -36,7 +36,7 @@
     "@tanstack/vue-query": "^5.62.12",
     "@tanstack/vue-table": "^8.20.5",
     "@vee-validate/zod": "^4.15.0",
-    "better-auth": "^1.1.9",
+    "better-auth": "^1.2.0",
     "buffer": "^6.0.3",
     "chain-registry": "^1.69.107",
     "date-fns": "^4.1.0",
