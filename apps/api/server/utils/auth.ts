@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { createAuthMiddleware, customSession } from 'better-auth/plugins'
+import { getSessionFromCtx, sessionMiddleware } from 'better-auth/api'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { eq } from 'drizzle-orm'
 import { bitsong } from '@bitsong-auth/better-auth-plugin'
@@ -9,6 +10,21 @@ import { db } from '../../db'
 // export const betterAuthParams: BetterAuthOptions = {
 // ...
 // }
+
+async function getWallets(userId: string) {
+  return db.query.auth_wallets.findMany({
+    columns: {
+      chainType: true,
+      chainName: true,
+      coinType: true,
+      address: true,
+      pubkey: true,
+      parentPubkey: true,
+      walletType: true,
+    },
+    where: eq(shares.userId, userId),
+  })
+}
 
 let _auth: ReturnType<typeof betterAuth>
 export function serverAuth() {
@@ -54,24 +70,9 @@ export function serverAuth() {
       plugins: [
         bitsong(),
         customSession(async ({ user, session }) => {
-          const wallets = await db.query.auth_wallets.findMany({
-            columns: {
-              chainType: true,
-              chainName: true,
-              coinType: true,
-              address: true,
-              pubkey: true,
-              parentPubkey: true,
-              walletType: true,
-            },
-            where: eq(shares.userId, user.id),
-          })
+          const wallets = await getWallets(user.id)
 
-          return {
-            user,
-            session,
-            wallets,
-          }
+          return { user, session, wallets }
         }),
       ],
       hooks: {
@@ -79,9 +80,43 @@ export function serverAuth() {
           if (ctx.path === '/callback/:id') {
             if (ctx.params?.id === 'google') {
               console.log('google callback, attaching wallet....')
+
+              const newSession = ctx.context.newSession
+              if (newSession?.session?.id === undefined) {
+                console.log('no session found')
+                return
+              }
+
+              const wallets = await getWallets(newSession.user.id)
+              const wallet = wallets.find(w => w.chainName === 'bitsong' && w.walletType === 'embedded')
+              if (wallet) {
+                await ctx.context.internalAdapter.updateSession(
+                  newSession.session.token,
+                  {
+                    selectedWallet: wallet.address,
+                  },
+                )
+              }
             }
             else if (ctx.params?.id === 'github') {
               console.log('github callback, attaching wallet....')
+
+              const newSession = ctx.context.newSession
+              if (newSession?.session?.id === undefined) {
+                console.log('no session found')
+                return
+              }
+
+              const wallets = await getWallets(newSession.user.id)
+              const wallet = wallets.find(w => w.chainName === 'bitsong' && w.walletType === 'embedded')
+              if (wallet) {
+                await ctx.context.internalAdapter.updateSession(
+                  newSession.session.token,
+                  {
+                    selectedWallet: wallet.address,
+                  },
+                )
+              }
             }
           }
 
