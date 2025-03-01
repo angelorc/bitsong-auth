@@ -4,7 +4,7 @@ import type { H3Event } from 'h3'
 
 export const authClient = (event: H3Event) => {
   return createAuthClient({
-    baseURL: 'http://localhost:3000',
+    baseURL: useRuntimeConfig(event).public.apiUrl,
     fetchOptions: {
       headers: event.headers,
     },
